@@ -42,16 +42,36 @@ from keras.layers import Dense
 classifier = Sequential()
 
 # Adding the input layer and the first hidden layer and using the Rectifier function as the Activation Function
-classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu', input_dim = 11))
+classifier.add(Dense(units = 6, 
+                     kernel_initializer = 'uniform', 
+                     activation = 'relu', 
+                     input_dim = 11))
 
 # Adding the second hidden layer and using the Rectifier function as the Activation Function
-classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu'))
+classifier.add(Dense(units = 6, 
+                     kernel_initializer = 'uniform', 
+                     activation = 'relu'))
 
 # Adding the output layer and using the Sigmoid function as the Activation Function
-classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+classifier.add(Dense(units = 1, 
+                     kernel_initializer = 'uniform', 
+                     activation = 'sigmoid'))
 
 # Compiling the ANN
-classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'adam', 
+                   loss = 'binary_crossentropy', 
+                   metrics = ['accuracy'])
 
 # Fitting the ANN to the Training set
 classifier.fit(X_train, y_train, batch_size = 10, epochs = 100)
+
+
+# Predicting
+
+# Predicting the Test set results
+y_pred = classifier.predict(X_test)
+y_pred = (y_pred > 0.5)
+
+# Making the Confusion Matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
